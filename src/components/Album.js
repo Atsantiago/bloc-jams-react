@@ -45,6 +45,13 @@ handleSongClick(song) {
   }
 }
 
+playIcon() {
+  const isPlaying = this.state.isPlaying === true;
+  if(isPlaying){
+    document.createElement('<span className="ion-pause"></span>')
+  };
+}
+
   render() {
     return (
       <section className="album">
@@ -65,8 +72,11 @@ handleSongClick(song) {
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
-                    <td>{index + 1}</td>
+                  <tr className="song" key={index}
+                  onMouseEnter={() => this.playIcon()}
+                  onClick={() => this.handleSongClick(song)}
+                  >
+                    <td >{index + 1}</td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>
