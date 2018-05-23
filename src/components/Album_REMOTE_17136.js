@@ -72,16 +72,11 @@ playIcon() {
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-<<<<<<< HEAD
-                  <tr key={index+1}>
-                    <td>{index + 1}</td>
-=======
                   <tr className="song" key={index}
                   onMouseEnter={() => this.playIcon()}
                   onClick={() => this.handleSongClick(song)}
                   >
                     <td >{index + 1}</td>
->>>>>>> 548a85e6fcdef1756e6ce10c8612502bac678dd3
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>

@@ -10,45 +10,7 @@ class Album extends Component {
   });
 
   this.state = {
-    album: album,
-    currentSong: album.songs[0],
-    isPlaying: false
-  };
-
-this.audioElement = document.createElement('audio');
-this.audioElement.src = album.songs[0].audioSrc;
-
-}
-
-play() {
-  this.audioElement.play();
-  this.setState({ isPlaying: true});
-}
-
-pause() {
-  this.audioElement.pause();
-  this.setState({isPlaying: false});
-}
-
-setSong(song) {
-  this.audioElement.src = song.audioSrc;
-  this.setState({ currentSong: song});
-}
-
-handleSongClick(song) {
-  const isSameSong = this.state.currentSong === song;
-  if (this.state.isPlaying && isSameSong) {
-    this.pause();
-  } else {
-    if (!isSameSong) { this.setSong(song); }
-    this.play();
-  }
-}
-
-playIcon() {
-  const isPlaying = this.state.isPlaying === true;
-  if(isPlaying){
-    document.createElement('<span className="ion-pause"></span>')
+    album: album
   };
 }
 
@@ -72,18 +34,10 @@ playIcon() {
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-<<<<<<< HEAD
-                  <tr key={index+1}>
+                  <tr>
                     <td>{index + 1}</td>
-=======
-                  <tr className="song" key={index}
-                  onMouseEnter={() => this.playIcon()}
-                  onClick={() => this.handleSongClick(song)}
-                  >
-                    <td >{index + 1}</td>
->>>>>>> 548a85e6fcdef1756e6ce10c8612502bac678dd3
                     <td>{song.title}</td>
-                    <td>{song.duration}</td>
+
                   </tr>
                 )
             }
