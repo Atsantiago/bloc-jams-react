@@ -65,7 +65,11 @@ handleSongClick(song) {
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
+<<<<<<< HEAD
                   <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
+=======
+                  <tr key={index+1}>
+>>>>>>> 93bdce94a5cc9d959b9a4da469b3cd586c46a39c
                     <td>{index + 1}</td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
