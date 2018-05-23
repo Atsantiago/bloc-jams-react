@@ -43,7 +43,7 @@ handleSongClick(song) {
     if (!isSameSong) { this.setSong(song); }
     this.play();
   }
-}
+} 
 
   render() {
     return (
