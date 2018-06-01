@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
+import './album.css';
 
 class Album extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class Album extends Component {
   this.state = {
     album: album,
     currentSong: album.songs[0],
-    isPlaying: false
+    isPlaying: false,
+    hoveredSongs: []
   };
 
 this.audioElement = document.createElement('audio');
@@ -36,27 +38,45 @@ setSong(song) {
 }
 
 handleSongClick(song) {
-  const isSameSong = this.state.currentSong === song;
-  if (this.state.isPlaying && isSameSong) {
-    this.pause();
-  } else {
-    if (!isSameSong) { this.setSong(song); }
-    this.play();
-  }
+    const isSameSong = this.state.currentSong === song;
+    if (this.state.isPlaying && isSameSong) {
+      this.pause();
+    } else {
+      if (!isSameSong) { this.setSong(song); }
+      this.play();
+    }
 }
 
-playIcon() {
-  const isPlaying = this.state.isPlaying === true;
-  if(isPlaying){
-    document.createElement('<span className="ion-pause"></span>')
-  };
+handleMouseEnter(index) {
+  console.log("Before Enter");
+  console.log(this.state.hoveredSongs);
+  let hoveredSongs = this.state.hoveredSongs.slice(index);
+  this.state.hoveredSongs.push(index);
+  this.setState({ hoveredSongs: hoveredSongs });
+
+  console.log("After Enter");
+  console.log(this.state.hoveredSongs);
+}
+
+handleMouseLeave(index){
+
+  console.log("Before Leave");
+  console.log(this.state.hoveredSongs);
+  // let hoveredSongs = this.state.hoveredSongs.slice(index);
+  // let i = this.state.hoveredSongs.indexOf(index);
+  // hoveredSongs.pop();
+  // this.setState({ hoveredSongs: hoveredSongs });
+
+  console.log("After Leave");
+  console.log(this.state.hoveredSongs);
 }
 
   render() {
+
     return (
       <section className="album">
         <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} />
+          <img id="album-cover-art" src={this.state.album.albumCover} alt="cover-art"/>
           <div className="album-details">
             <h1 id="album-title">{this.state.album.title}</h1>
             <h2 className="artist">{this.state.album.artist}</h2>
@@ -72,16 +92,13 @@ playIcon() {
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-<<<<<<< HEAD
-                  <tr key={index+1}>
-                    <td>{index + 1}</td>
-=======
-                  <tr className="song" key={index}
-                  onMouseEnter={() => this.playIcon()}
-                  onClick={() => this.handleSongClick(song)}
-                  >
-                    <td >{index + 1}</td>
->>>>>>> 548a85e6fcdef1756e6ce10c8612502bac678dd3
+                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
+                    <td
+                      onMouseLeave={() => this.handleMouseLeave(index)}
+                      onMouseEnter={(e) => this.handleMouseEnter(index)}
+                      className={ this.state.hoveredSongs.includes(index) ? "ion-play" : null}>
+                      <td className={this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}</td>
+                    </td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>
