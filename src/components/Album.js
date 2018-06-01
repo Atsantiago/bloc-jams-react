@@ -50,26 +50,39 @@ handleSongClick(song) {
 handleMouseEnter(index) {
   console.log("Before Enter");
   console.log(this.state.hoveredSongs);
-  let hoveredSongs = this.state.hoveredSongs.slice(index);
-  this.state.hoveredSongs.push(index);
+  let hoveredSongs = this.state.hoveredSongs.slice();
+  hoveredSongs.push(index);
   this.setState({ hoveredSongs: hoveredSongs });
 
   console.log("After Enter");
   console.log(this.state.hoveredSongs);
+  //if (this.state.isPlaying) {
+  //  <span className={this.state.album.songs.index ? 'ion-pause' : 'ion-play'}></span>;
+  //}
 }
 
 handleMouseLeave(index){
-
   console.log("Before Leave");
   console.log(this.state.hoveredSongs);
-  // let hoveredSongs = this.state.hoveredSongs.slice(index);
-  // let i = this.state.hoveredSongs.indexOf(index);
-  // hoveredSongs.pop();
-  // this.setState({ hoveredSongs: hoveredSongs });
+  let hoveredSongs = this.state.hoveredSongs.slice();
+  let i = hoveredSongs.indexOf(index);
+  hoveredSongs.splice(i);
+  this.setState({ hoveredSongs: hoveredSongs });
 
   console.log("After Leave");
   console.log(this.state.hoveredSongs);
 }
+
+classNaming (index) {
+  let classname = <span></span>
+      if (this.state.hoveredSongs.includes(index) && this.state.isPlaying && this.state.currentSong) {
+      classname = <span className = "ion-pause"></span>;
+    } else if (this.state.hoveredSongs.includes(index) && this.state.isPlaying && !this.state.currentSong) {
+        classname = <span className = "ion-play"></span>;
+      } else {
+        classname = <span className = "hidden"></span>;
+      }
+    }
 
   render() {
 
@@ -92,12 +105,13 @@ handleMouseLeave(index){
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)} >
-                    <td
-                      onMouseLeave={() => this.handleMouseLeave(index)}
-                      onMouseEnter={(e) => this.handleMouseEnter(index)}
-                      className={ this.state.hoveredSongs.includes(index) ? "ion-play" : null}>
-                      <td className={this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}</td>
+                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
+                  onMouseEnter={(e) => this.handleMouseEnter(index)}
+                  onMouseLeave={() => this.handleMouseLeave(index)}
+                  >
+                    <td className={ this.state.hoveredSongs.includes(index) ?
+                      (this.state.currentSong ? (this.state.isPlaying ? "ion-pause" : "ion-play" ): "ion-play") : null }>
+                        <td className={this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}</td>
                     </td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
