@@ -73,17 +73,6 @@ handleMouseLeave(index){
   console.log(this.state.hoveredSongs);
 }
 
-classNaming (index) {
-  let classname = <span></span>
-      if (this.state.hoveredSongs.includes(index) && this.state.isPlaying && this.state.currentSong) {
-      classname = <span className = "ion-pause"></span>;
-    } else if (this.state.hoveredSongs.includes(index) && this.state.isPlaying && !this.state.currentSong) {
-        classname = <span className = "ion-play"></span>;
-      } else {
-        classname = <span className = "hidden"></span>;
-      }
-    }
-
   render() {
 
     return (
@@ -109,9 +98,8 @@ classNaming (index) {
                   onMouseEnter={(e) => this.handleMouseEnter(index)}
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
-                    <td className={ this.state.hoveredSongs.includes(index) ?
-                      (this.state.currentSong ? (this.state.isPlaying ? "ion-pause" : "ion-play" ): "ion-play") : null }>
-                        <td className={this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}</td>
+                    <td className={ this.state.hoveredSongs.includes(index) ? (this.state.currentSong ? (this.state.isPlaying ? "ion-pause" : "ion-play" ): "ion-play") : null }>
+                        <td className={this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}.</td>
                     </td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
