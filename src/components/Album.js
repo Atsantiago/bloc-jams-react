@@ -45,11 +45,15 @@ handleSongClick(song) {
   }
 }
 
-playIcon() {
-  const isPlaying = this.state.isPlaying === true;
-  if(isPlaying){
-    document.createElement('<span className="ion-pause"></span>')
-  };
+mouseEnter(props){
+  console.log("mouse Entered ");
+  const isSameSong = this.state.currentSong === this.state.currentSong;
+  this.state.hoveredSongs=[];
+  var hoveredSongs = [];
+  this.state.album.songs.map((song, index) =>
+  hoveredSongs.push({this.state.isPlaying ? true : false });
+)
+
 }
 
   render() {
@@ -73,10 +77,13 @@ playIcon() {
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
                   <tr className="song" key={index}
-                  onMouseEnter={() => this.playIcon()}
                   onClick={() => this.handleSongClick(song)}
                   >
-                    <td >{index + 1}</td>
+                    <td onMouseEnter={() => this.mouseEnter()}>
+                      <span className="ion-play"></span>
+                      <span className="ion-pause"></span>
+                      <span className="song-number">{index + 1}</span>
+                    </td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>
