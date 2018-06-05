@@ -47,42 +47,30 @@ handleSongClick(song) {
     }
 }
 
-<<<<<<< HEAD
-mouseEnter(props){
-  console.log("mouse Entered ");
-  const isSameSong = this.state.currentSong === this.state.currentSong;
-  this.state.hoveredSongs=[];
-  var hoveredSongs = [];
-  this.state.album.songs.map((song, index) =>
-  hoveredSongs.push({this.state.isPlaying ? true : false });
-)
-
-=======
 handleMouseEnter(index) {
   console.log("Before Enter");
   console.log(this.state.hoveredSongs);
-  let hoveredSongs = this.state.hoveredSongs.slice();
-  hoveredSongs.push(index);
-  this.setState({ hoveredSongs: hoveredSongs });
+
+  let hoverSongs = this.state.hoveredSongs.slice();
+  hoverSongs.pop();
+  hoverSongs.push(index);
+  this.setState({ hoveredSongs: hoverSongs });
 
   console.log("After Enter");
   console.log(this.state.hoveredSongs);
-  //if (this.state.isPlaying) {
-  //  <span className={this.state.album.songs.index ? 'ion-pause' : 'ion-play'}></span>;
-  //}
+
 }
 
 handleMouseLeave(index){
   console.log("Before Leave");
   console.log(this.state.hoveredSongs);
-  let hoveredSongs = this.state.hoveredSongs.slice();
-  let i = hoveredSongs.indexOf(index);
-  hoveredSongs.splice(i);
-  this.setState({ hoveredSongs: hoveredSongs });
+  let hoverSongs = this.state.hoveredSongs.slice();
+  let i = hoverSongs.indexOf(index);
+  hoverSongs.splice(index);
+  this.setState({ hoveredSongs: hoverSongs });
 
   console.log("After Leave");
   console.log(this.state.hoveredSongs);
->>>>>>> e582477a8522b2363d8824c6890ea73264f231a2
 }
 
   render() {
@@ -106,22 +94,12 @@ handleMouseLeave(index){
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-<<<<<<< HEAD
-                  <tr className="song" key={index}
-                  onClick={() => this.handleSongClick(song)}
-                  >
-                    <td onMouseEnter={() => this.mouseEnter()}>
-                      <span className="ion-play"></span>
-                      <span className="ion-pause"></span>
-                      <span className="song-number">{index + 1}</span>
-=======
-                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
+                  <tr className={this.state.currentSong[index] ? (this.state.isPlaying ? "ion-pause" : "ion-play") : "ion-play"} key={index} onClick={() => this.handleSongClick(song)}
                   onMouseEnter={(e) => this.handleMouseEnter(index)}
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
                     <td className={ this.state.hoveredSongs.includes(index) ? (this.state.currentSong ? (this.state.isPlaying ? "ion-pause" : "ion-play" ): "ion-play") : null }>
-                        <td className={this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}.</td>
->>>>>>> e582477a8522b2363d8824c6890ea73264f231a2
+                        <td className={ this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}.</td>
                     </td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
