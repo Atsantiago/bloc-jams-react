@@ -74,6 +74,17 @@ handleMouseLeave(index){
   console.log(this.state.hoveredSongs);
 }
 
+iconButtonLogic(song){
+  const isSameSong = this.state.currentSong === song;
+  if (isSameSong) {
+    return <span className="ion-play"></span>
+  } else if (this.state.isPlaying && isSameSong) {
+    return <span className="ion-pause"></span>
+  } else {
+    return <span className="song-number"></span>
+  }
+}
+
   render() {
 
     return (
@@ -96,10 +107,10 @@ handleMouseLeave(index){
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
                   <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
-                  onMouseEnter={(e) => this.handleMouseEnter(index)}
+                  onMouseEnter={() => this.handleMouseEnter(index)}
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
-                    <td className={ this.state.hoveredSongs.includes(index) ? (this.state.isPlaying ? "ion-pause" : "ion-play" ) : null }>
+                    <td className={ this.iconButtonLogic(song) }>
                         <td className={ this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}.</td>
                     </td>
                     <td>{song.title}</td>
