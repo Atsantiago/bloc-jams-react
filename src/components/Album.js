@@ -69,23 +69,16 @@ iconButtonLogic(song, index){
   if (currentSongIsPlaying) {
     if (this.state.hoveredSongs.includes(index)) {
       return <span className="ion-pause"></span>
-    } else if (currentSongIsPlaying) {
-        return <span className="ion-pause"></span>
-      }
     }
-
+        return <span className="ion-pause"></span>
+    }
     if (isSameSong && !this.state.isPlaying) {
       return <span className="ion-play"></span>
     }
-
-   else {
-      if (this.state.hoveredSongs.includes(index)) {
+    if (this.state.hoveredSongs.includes(index)) {
         return <span className="ion-play"></span>
-      }
-    else {
-      return `${index + 1}.`
     }
-  }
+      return `${index + 1}.`
 }
 
   render() {
@@ -114,7 +107,6 @@ iconButtonLogic(song, index){
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
                     <td>{this.iconButtonLogic(song, index)}</td>
-
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>
