@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
 import './album.css';
+import PlayerBar from './PlayerBar';
 
 class Album extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Album extends Component {
 
   this.state = {
     album: album,
-    currentSong: album.songs[0],
+    currentSong: undefined,
     isPlaying: false,
     hoveredSongs: [],
   };
@@ -49,40 +50,35 @@ handleSongClick(song) {
 }
 
 handleMouseEnter(index) {
-  console.log("Before Enter");
-  console.log(this.state.hoveredSongs);
-
   let hoverSongs = this.state.hoveredSongs.slice();
   hoverSongs.pop();
   hoverSongs.push(index);
   this.setState({ hoveredSongs: hoverSongs });
-
-  console.log("After Enter");
-  console.log(this.state.hoveredSongs);
-
 }
 
 handleMouseLeave(index){
-  console.log("Before Leave");
-  console.log(this.state.hoveredSongs);
   let hoverSongs = this.state.hoveredSongs.slice();
-  let i = hoverSongs.indexOf(index);
   hoverSongs.splice(index);
   this.setState({ hoveredSongs: hoverSongs });
-
-  console.log("After Leave");
-  console.log(this.state.hoveredSongs);
 }
 
-iconButtonLogic(song){
+iconButtonLogic(song, index){
   const isSameSong = this.state.currentSong === song;
-  if (isSameSong) {
-    return <span className="ion-play"></span>
-  } else if (this.state.isPlaying && isSameSong) {
-    return <span className="ion-pause"></span>
-  } else {
-    return <span className="song-number"></span>
-  }
+  const currentSongIsPlaying = isSameSong && this.state.isPlaying;
+
+  if (currentSongIsPlaying) {
+    if (this.state.hoveredSongs.includes(index)) {
+      return <span className="ion-pause"></span>
+    }
+        return <span className="ion-pause"></span>
+    }
+    if (isSameSong && !this.state.isPlaying) {
+      return <span className="ion-play"></span>
+    }
+    if (this.state.hoveredSongs.includes(index)) {
+        return <span className="ion-play"></span>
+    }
+      return `${index + 1}.`
 }
 
   render() {
@@ -110,9 +106,7 @@ iconButtonLogic(song){
                   onMouseEnter={() => this.handleMouseEnter(index)}
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
-                    <td className={ this.iconButtonLogic(song) }>
-                        <td className={ this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}.</td>
-                    </td>
+                    <td>{this.iconButtonLogic(song, index)}</td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>
@@ -121,6 +115,7 @@ iconButtonLogic(song){
             </section>
           </tbody>
         </table>
+        <PlayerBar />
       </section>
     );
   }
