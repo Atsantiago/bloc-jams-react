@@ -94,7 +94,7 @@ handleMouseLeave(index){
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
-                  <tr className={this.state.currentSong[index] ? (this.state.isPlaying ? "ion-pause" : "ion-play") : "ion-play"} key={index} onClick={() => this.handleSongClick(song)}
+                  <tr className={(this.state.currentSong &&  ? (this.state.isPlaying ? "ion-pause" : "ion-play") : "ion-play"} key={index} onClick={() => this.handleSongClick(song)}
                   onMouseEnter={(e) => this.handleMouseEnter(index)}
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
