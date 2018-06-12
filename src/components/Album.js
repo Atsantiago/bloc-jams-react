@@ -62,65 +62,73 @@ handleMouseLeave(index){
   this.setState({ hoveredSongs: hoverSongs });
 }
 
+handlePrevClick() {
+  const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+  const newIndex = Math.max(0, currentIndex -1);
+  const newSong = this.state.album.songs[newIndex];
+  this.setSong(newSong);
+  this.play();
+}
+
 iconButtonLogic(song, index){
   const isSameSong = this.state.currentSong === song;
   const currentSongIsPlaying = isSameSong && this.state.isPlaying;
 
   if (currentSongIsPlaying) {
     if (this.state.hoveredSongs.includes(index)) {
-      return <span className="ion-pause"></span>
+      return <span className="ion-pause"></span>;
     }
-        return <span className="ion-pause"></span>
+        return <span className="ion-pause"></span>;
     }
     if (isSameSong && !this.state.isPlaying) {
-      return <span className="ion-play"></span>
+      return <span className="ion-play"></span>;
     }
     if (this.state.hoveredSongs.includes(index)) {
-        return <span className="ion-play"></span>
+        return <span className="ion-play"></span>;
     }
-      return `${index + 1}.`
+      return `${index + 1}.`;
 }
 
   render() {
 
     return (
-      <section className="album">
-        <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} alt="cover-art"/>
-          <div className="album-details">
-            <h1 id="album-title">{this.state.album.title}</h1>
-            <h2 className="artist">{this.state.album.artist}</h2>
-            <div id="release-info">{this.state.album.releaseInfo}</div>
-          </div>
-        </section>
-        <table id="song-list">
-          <colgroup>
-            <col id="song-number-column" />
-            <col id="song-title-column" />
-            <col id="song-duration-column" />
-          </colgroup>
-          <tbody>
-            <section className="songs">
-              {this.state.album.songs.map((song, index) =>
-<<<<<<< HEAD
-                  <tr className={(this.state.currentSong &&  ? (this.state.isPlaying ? "ion-pause" : "ion-play") : "ion-play"} key={index} onClick={() => this.handleSongClick(song)}
-                  onMouseEnter={(e) => this.handleMouseEnter(index)}
-=======
-                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
-                  onMouseEnter={() => this.handleMouseEnter(index)}
->>>>>>> 4b921a00aff53ac51724b4f77232ae46e50dbd26
-                  onMouseLeave={() => this.handleMouseLeave(index)}
-                  >
-                    <td>{this.iconButtonLogic(song, index)}</td>
-                    <td>{song.title}</td>
-                    <td>{song.duration}</td>
-                  </tr>
-                )
+          <section className="album">
+            <section id="album-info">
+              <img id="album-cover-art" src={this.state.album.albumCover} alt="cover-art"/>
+              <div className="album-details">
+                <h1 id="album-title">{this.state.album.title}</h1>
+                <h2 className="artist">{this.state.album.artist}</h2>
+                <div id="release-info">{this.state.album.releaseInfo}</div>
+              </div>
+            </section>
+            <table id="song-list">
+              <colgroup>
+                <col id="song-number-column" />
+                <col id="song-title-column" />
+                <col id="song-duration-column" />
+              </colgroup>
+              <tbody>
+                <section className="songs">
+                  {this.state.album.songs.map((song, index) =>
+                      <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
+                      onMouseEnter={() => this.handleMouseEnter(index)}
+                      onMouseLeave={() => this.handleMouseLeave(index)}
+                      >
+                        <td>{this.iconButtonLogic(song, index)}</td>
+                        <td>{song.title}</td>
+                        <td>{song.duration}</td>
+                      </tr>
+                    )
             }
             </section>
           </tbody>
         </table>
-        <PlayerBar />
+        <PlayerBar
+          isPlaying={this.state.isPlaying}
+          currentSong={this.state.currentSong}
+          handleSongClick={() => this.handleSongClick(this.state.currentSong)}
+          handlePrevClick={() => this.handlePrevClick()}
+         />
       </section>
     );
   }
