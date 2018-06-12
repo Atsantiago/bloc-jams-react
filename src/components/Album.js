@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
 import './album.css';
+import PlayerBar from './PlayerBar';
 
 class Album extends Component {
   constructor(props) {
@@ -12,9 +13,9 @@ class Album extends Component {
 
   this.state = {
     album: album,
-    currentSong: album.songs[0],
+    currentSong: undefined,
     isPlaying: false,
-    hoveredSongs: []
+    hoveredSongs: [],
   };
 
 this.audioElement = document.createElement('audio');
@@ -35,6 +36,7 @@ pause() {
 setSong(song) {
   this.audioElement.src = song.audioSrc;
   this.setState({ currentSong: song});
+
 }
 
 handleSongClick(song) {
@@ -48,29 +50,35 @@ handleSongClick(song) {
 }
 
 handleMouseEnter(index) {
-  console.log("Before Enter");
-  console.log(this.state.hoveredSongs);
-
   let hoverSongs = this.state.hoveredSongs.slice();
   hoverSongs.pop();
   hoverSongs.push(index);
   this.setState({ hoveredSongs: hoverSongs });
-
-  console.log("After Enter");
-  console.log(this.state.hoveredSongs);
-
 }
 
 handleMouseLeave(index){
-  console.log("Before Leave");
-  console.log(this.state.hoveredSongs);
   let hoverSongs = this.state.hoveredSongs.slice();
-  let i = hoverSongs.indexOf(index);
   hoverSongs.splice(index);
   this.setState({ hoveredSongs: hoverSongs });
+}
 
-  console.log("After Leave");
-  console.log(this.state.hoveredSongs);
+iconButtonLogic(song, index){
+  const isSameSong = this.state.currentSong === song;
+  const currentSongIsPlaying = isSameSong && this.state.isPlaying;
+
+  if (currentSongIsPlaying) {
+    if (this.state.hoveredSongs.includes(index)) {
+      return <span className="ion-pause"></span>
+    }
+        return <span className="ion-pause"></span>
+    }
+    if (isSameSong && !this.state.isPlaying) {
+      return <span className="ion-play"></span>
+    }
+    if (this.state.hoveredSongs.includes(index)) {
+        return <span className="ion-play"></span>
+    }
+      return `${index + 1}.`
 }
 
   render() {
@@ -94,13 +102,16 @@ handleMouseLeave(index){
           <tbody>
             <section className="songs">
               {this.state.album.songs.map((song, index) =>
+<<<<<<< HEAD
                   <tr className={(this.state.currentSong &&  ? (this.state.isPlaying ? "ion-pause" : "ion-play") : "ion-play"} key={index} onClick={() => this.handleSongClick(song)}
                   onMouseEnter={(e) => this.handleMouseEnter(index)}
+=======
+                  <tr className="song" key={index} onClick={() => this.handleSongClick(song)}
+                  onMouseEnter={() => this.handleMouseEnter(index)}
+>>>>>>> 4b921a00aff53ac51724b4f77232ae46e50dbd26
                   onMouseLeave={() => this.handleMouseLeave(index)}
                   >
-                    <td className={ this.state.hoveredSongs.includes(index) ? (this.state.currentSong ? (this.state.isPlaying ? "ion-pause" : "ion-play" ): "ion-play") : null }>
-                        <td className={ this.state.hoveredSongs.includes(index) ? "hidden" : null}>{index+1}.</td>
-                    </td>
+                    <td>{this.iconButtonLogic(song, index)}</td>
                     <td>{song.title}</td>
                     <td>{song.duration}</td>
                   </tr>
@@ -109,6 +120,7 @@ handleMouseLeave(index){
             </section>
           </tbody>
         </table>
+        <PlayerBar />
       </section>
     );
   }
