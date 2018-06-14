@@ -52,10 +52,16 @@ compnentWillUnmount() {
 }
 
 formatTime(seconds){
-  const sec = seconds % 60;
-  const min = (seconds / 60) % 60;
+  if (seconds === 0) { return "-:--" }
 
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
 
+  if (sec < 10) {
+    return min + ":0" + sec;
+  } else {
+    return min + ":" + sec;
+  }
 }
 
 play() {
@@ -175,7 +181,7 @@ iconButtonLogic(song, index){
                       >
                         <td>{this.iconButtonLogic(song, index)}</td>
                         <td>{song.title}</td>
-                        <td>{song.duration}</td>
+                        <td>{this.formatTime(song.duration)}</td>
                       </tr>
                     )
             }
@@ -193,6 +199,7 @@ iconButtonLogic(song, index){
           handleNextClick={() => this.handleNextClick()}
           handleTimeChange={(e) => this.handleTimeChange(e)}
           handleVolumeChange={(e) => this.handleVolumeChange(e)}
+          formatTime={this.formatTime}
          />
       </section>
     );
