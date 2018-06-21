@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-}
+  }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -20,6 +20,24 @@
 
 .App-intro {
   font-size: large;
+}
+
+.mdl-layout__content{
+  color: #fff;
+  text-shadow: 2px 2px #000;
+}
+
+.mdl-layout__header{
+  background-color: #1d0301;
+  color: #fff;
+}
+
+.mdl-layout-title {
+
+}
+
+.page-content {
+  margin-top: 70px;
 }
 
 @keyframes App-logo-spin {
